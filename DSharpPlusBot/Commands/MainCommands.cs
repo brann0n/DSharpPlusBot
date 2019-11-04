@@ -1,6 +1,7 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 using DSharpPlusBot.Entities;
 using System;
@@ -39,5 +40,20 @@ namespace DSharpPlusBot.Commands
         {
             await ctx.RespondAsync(text);
         }
+
+		[Command("agree")]
+		public async Task AgreeAsync(CommandContext ctx)
+		{
+			await ctx.Message.DeleteAsync();			
+
+			await ctx.TriggerTypingAsync();
+
+			var embed = new DiscordEmbedBuilder
+			{
+				ImageUrl = "https://i.ytimg.com/vi/WHEdoFXUnYQ/maxresdefault.jpg"
+			};
+
+			await ctx.RespondAsync(embed: embed);
+		}
     }
 }
