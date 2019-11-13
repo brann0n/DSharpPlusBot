@@ -14,11 +14,15 @@ using System.Threading.Tasks;
 using System.Resources;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading;
+using DSharpPlus.EventArgs;
+using DSharpPlus.Entities;
 
 namespace DSharpPlusBot
 {
     public class Bot
     {
+		public string status;
+
         private DiscordClient _client;
         private CommandsNextExtension _commands;
         private InteractivityExtension _interactivity;
@@ -76,8 +80,16 @@ namespace DSharpPlusBot
 
             _commands.RegisterCommands<MainCommands>();
             _commands.RegisterCommands<OwnerCommands>();
+			status = "hentai";
+			//client connect event: 
+			_client.Ready += Client_Ready;
 
-            await _client.ConnectAsync(new DSharpPlus.Entities.DiscordActivity("hentai", DSharpPlus.Entities.ActivityType.Watching));
+			await _client.ConnectAsync();
         }
-    }
+
+		private async Task Client_Ready(ReadyEventArgs e)
+		{
+			await _client.UpdateStatusAsync(new DiscordActivity(status, ActivityType.Watching));
+		}
+	}
 }

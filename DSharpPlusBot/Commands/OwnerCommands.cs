@@ -1,6 +1,7 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 using DSharpPlusBot.Entities;
 using System;
@@ -34,5 +35,13 @@ namespace DSharpPlusBot.Commands
         {
             await ctx.RespondAsync($"You're owner");
         }
-    }
+
+		[Command("status"), Description("Sets the status with the provided text and the ActivityType to playing")]
+		public async Task StatusAsync(CommandContext ctx, [RemainingText, Description("your fucking status")]string text)
+		{
+			_bot.status = text;
+			await _client.UpdateStatusAsync(new DiscordActivity(_bot.status, ActivityType.Playing));
+			await ctx.RespondAsync($"uhhh, yeahh");
+		}
+	}
 }
